@@ -823,6 +823,119 @@
     background:rgba(74,240,255,0.05);
   }
 
+
+  /* Show more projects toggle button */
+  .more-proj-toggle-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .more-proj-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .more-proj-toggle-btn:hover {
+    background: rgba(74,240,255,0.08);
+    border-color: rgba(74,240,255,0.4);
+    color: var(--accent);
+  }
+
+  /* Floating modal overlay for remaining projects */
+  .more-proj-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,8,18,0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .more-proj-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .more-proj-modal {
+    width: min(480px, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    background: var(--bg2, #0d1220);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transform: translateY(10px) scale(0.98);
+    transition: transform 0.25s ease;
+  }
+  .more-proj-modal-overlay.active .more-proj-modal {
+    transform: translateY(0) scale(1);
+  }
+  .more-proj-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .more-proj-modal-title {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    color: var(--text);
+    margin: 0;
+  }
+  .more-proj-modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+  }
+  .more-proj-modal-close:hover { color: var(--text); }
+  .modal-proj-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-proj-row:last-child { border-bottom: none; }
+  .modal-proj-name {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+  .modal-proj-link {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid rgba(74,240,255,0.3);
+    border-radius: 6px;
+    padding: 6px 12px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .modal-proj-link:hover {
+    background: rgba(74,240,255,0.08);
+  }
+  @media (max-width:640px) {
+    .modal-proj-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+
   @media (max-width:900px) {
     .more-projects-section { padding:0 24px;margin-top:48px; }
     .more-proj-item { flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px; }
@@ -1415,70 +1528,6 @@ I'm always motivated by the opportunity to develop AI systems that gives a value
           </div>
         </div>
       </div>
-
-      <!-- PROJECT 05: Agentic GitHub Code Reviewer -->
-      <div class="proj-block" id="proj-block-4" data-idx="4" style="--block-color:#4af0ff">
-        <div class="proj-block-inner">
-          <div class="proj-text">
-            <div class="proj-num">Project 05 / 05</div>
-            <h3 class="proj-title">Agentic GitHub Code Reviewer</h3>
-            <p class="proj-desc">Privacy-preserving code review using LangGraph, RAG, and local LLMs where no code leaves your machine. Autonomously identifies bugs, security risks, and performance issues  in GitHub repositories.</p>
-            <div class="proj-pills">
-              <span class="pill">LangGraph</span>
-              <span class="pill">RAG</span>
-              <span class="pill">ChromaDB</span>
-              <span class="pill">Local LLMs</span>
-              <span class="pill">GitHub API</span>
-            </div>
-            <a href="https://github.com/Ravevx/Agentic-GitHub-Code-Reviewer" target="_blank" rel="noopener noreferrer" class="proj-link" style="color:#4af0ff;border-color:#4af0ff33">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              View on GitHub
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-            </a>
-          </div>
-          <div class="proj-visual">
-            <div class="arch-card">
-              <div class="arch-label">Architecture</div>
-              <svg class="arch-svg" viewBox="0 0 320 270" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <marker id="aw4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(74,240,255,0.7)"/></marker>
-                  <marker id="aw4p" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="rgba(124,111,255,0.7)"/></marker>
-                </defs>
-                <rect x="100" y="8" width="120" height="30" rx="4" fill="rgba(74,240,255,0.06)" stroke="rgba(74,240,255,0.5)" stroke-width="1.2"/>
-                <text x="160" y="21" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8.5px">GitHub Repository</text>
-                <text x="160" y="32" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">GitHub API · PR / Commit</text>
-                <line x1="160" y1="38" x2="160" y2="62" stroke="rgba(74,240,255,0.55)" stroke-width="1.1" fill="none" marker-end="url(#aw4)"/>
-                <rect x="85" y="62" width="150" height="32" rx="4" fill="rgba(74,240,255,0.06)" stroke="rgba(74,240,255,0.5)" stroke-width="1.2"/>
-                <text x="160" y="76" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8.5px">LangGraph Agent Orchestrator</text>
-                <text x="160" y="87" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">State machine · Multi-step reasoning</text>
-                <line x1="100" y1="94" x2="60" y2="118" stroke="rgba(74,240,255,0.4)" stroke-width="1" fill="none" marker-end="url(#aw4)"/>
-                <line x1="160" y1="94" x2="160" y2="118" stroke="rgba(74,240,255,0.4)" stroke-width="1" fill="none" marker-end="url(#aw4)"/>
-                <line x1="220" y1="94" x2="258" y2="118" stroke="rgba(74,240,255,0.4)" stroke-width="1" fill="none" marker-end="url(#aw4)"/>
-                <rect x="10" y="118" width="90" height="30" rx="4" fill="rgba(124,111,255,0.06)" stroke="rgba(124,111,255,0.4)" stroke-width="1"/>
-                <text x="55" y="131" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8px">RAG Retriever</text>
-                <text x="55" y="142" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">ChromaDB</text>
-                <rect x="115" y="118" width="90" height="30" rx="4" fill="rgba(124,111,255,0.06)" stroke="rgba(124,111,255,0.4)" stroke-width="1"/>
-                <text x="160" y="131" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8px">Local LLM</text>
-                <text x="160" y="142" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">Ollama / CodeLlama</text>
-                <rect x="220" y="118" width="90" height="30" rx="4" fill="rgba(124,111,255,0.06)" stroke="rgba(124,111,255,0.4)" stroke-width="1"/>
-                <text x="265" y="131" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8px">Code Parser</text>
-                <text x="265" y="142" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">AST · Tree-sitter</text>
-                <line x1="55" y1="148" x2="120" y2="172" stroke="rgba(124,111,255,0.4)" stroke-width="1" fill="none" marker-end="url(#aw4p)"/>
-                <line x1="160" y1="148" x2="160" y2="172" stroke="rgba(124,111,255,0.4)" stroke-width="1" fill="none" marker-end="url(#aw4p)"/>
-                <line x1="265" y1="148" x2="200" y2="172" stroke="rgba(124,111,255,0.4)" stroke-width="1" fill="none" marker-end="url(#aw4p)"/>
-                <rect x="75" y="172" width="170" height="32" rx="4" fill="rgba(255,107,157,0.06)" stroke="rgba(255,107,157,0.4)" stroke-width="1"/>
-                <text x="160" y="186" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8.5px">Review Report Generator</text>
-                <text x="160" y="197" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">Bugs · Security · Performance</text>
-                <line x1="160" y1="204" x2="160" y2="228" stroke="rgba(74,240,255,0.55)" stroke-width="1.1" fill="none" marker-end="url(#aw4)"/>
-                <rect x="85" y="228" width="150" height="30" rx="4" fill="rgba(74,240,255,0.06)" stroke="rgba(74,240,255,0.4)" stroke-width="1"/>
-                <text x="160" y="241" text-anchor="middle" fill="#f0f4ff" font-family="Inter,sans-serif" font-size="8.5px">PR Comment / Report</text>
-                <text x="160" y="252" text-anchor="middle" fill="#6b7a9a" font-family="Inter,sans-serif" font-size="7px">Posted to GitHub · 100% Private</text>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div><!-- end right-col -->
   </div><!-- /proj-layout -->
 
@@ -1510,6 +1559,28 @@ I'm always motivated by the opportunity to develop AI systems that gives a value
 
         <div class="more-proj-item" id="mpItem0">
           <div class="more-proj-info">
+            <h4 class="more-proj-name">Agentic Auditing &amp; Cleaning Databases</h4>
+            <p class="more-proj-desc">A multi-agent AI system that audits a raw data lake, designs a cleaning plan, reviews it through a committee (agents + human), generates &amp; validates cleaning code, executes it, and produces a final quality report.</p>
+          </div>
+          <a href="https://github.com/Ravevx/Agentic-Auditing-Cleaning-Databases" target="_blank" rel="noopener noreferrer" class="more-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="more-proj-item" id="mpItem1">
+          <div class="more-proj-info">
+            <h4 class="more-proj-name">Universal Dataset Distillation Pipeline</h4>
+            <p class="more-proj-desc">A no-code Streamlit app for LLM knowledge distillation — annotate any dataset with a large "teacher" model, then evaluate or fine-tune smaller "student" models via zero-shot, few-shot, or full weight updates, all from a single UI.</p>
+          </div>
+          <a href="https://github.com/Ravevx/Universal-Dataset-Distillation-Pipeline" target="_blank" rel="noopener noreferrer" class="more-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="more-proj-item" id="mpItem2">
+          <div class="more-proj-info">
             <h4 class="more-proj-name">Explainable Pneumonia Detection</h4>
             <p class="more-proj-desc">Medical AI framework achieving AUC &gt; 0.98, comparing CNNs and Vision Transformers. Grad-CAM faithfulness and concentration metrics build clinician trust in AI-assisted radiology.</p>
           </div>
@@ -1519,10 +1590,10 @@ I'm always motivated by the opportunity to develop AI systems that gives a value
           </a>
         </div>
 
-        <div class="more-proj-item" id="mpItem1">
+        <div class="more-proj-item" id="mpItem3">
           <div class="more-proj-info">
             <h4 class="more-proj-name">Research Paper → Code Pipeline</h4>
-            <p class="more-proj-desc">Multi-agent Analyst–Architect–Coder workflow using CrewAI and FAISS that transforms academic PDFs into deployable software/research projects</p>
+            <p class="more-proj-desc">Multi-agent Analyst–Architect–Coder workflow using CrewAI and FAISS that transforms academic PDFs into deployable software/research projects.</p>
           </div>
           <a href="https://github.com/Ravevx/Multi-Agent-Research-Paper-to-Codebase-Pipeline" target="_blank" rel="noopener noreferrer" class="more-proj-link">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -1530,34 +1601,12 @@ I'm always motivated by the opportunity to develop AI systems that gives a value
           </a>
         </div>
 
-        <div class="more-proj-item" id="mpItem2">
-          <div class="more-proj-info">
-            <h4 class="more-proj-name">LLM Spatial Reasoning Evaluation</h4>
-            <p class="more-proj-desc">A physics-based environment for evaluating spatial reasoning, adaptive learning, and problem-solving capabilities of multimodal LLMs.</p>
-          </div>
-          <a href="https://github.com/Ravevx/LLM-Spatial-Reasoning-Evaluation-2D-Physics-Puzzle" target="_blank" rel="noopener noreferrer" class="more-proj-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            GitHub
-          </a>
-        </div>
-
-        <div class="more-proj-item" id="mpItem3">
-          <div class="more-proj-info">
-            <h4 class="more-proj-name">Bio-Medical Claim Detection &amp; Span Extraction</h4>
-            <p class="more-proj-desc">NLP pipeline using PLM to detect and extract biomedical claims and evidence spans from scientific literature for automated fact verification.</p>
-          </div>
-          <a href="https://github.com/Ravevx/Bio-Medical-Claim-Mining" target="_blank" rel="noopener noreferrer" class="more-proj-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            GitHub
-          </a>
-        </div>
-
         <div class="more-proj-item" id="mpItem4">
           <div class="more-proj-info">
-            <h4 class="more-proj-name">ASP-Based Cloud Resource Allocation</h4>
-            <p class="more-proj-desc">Intelligent cloud resource scheduler using Answer Set Programming (Clingo) for optimal VM allocation, SLA satisfaction, and cost minimization through declarative constraint solving.</p>
+            <h4 class="more-proj-name">Agentic GitHub Code Reviewer</h4>
+            <p class="more-proj-desc">Privacy-preserving code review using LangGraph, RAG, and local LLMs where no code leaves your machine. Autonomously identifies bugs, security risks, and performance issues in GitHub repositories.</p>
           </div>
-          <a href="https://github.com/Ravevx/CloudRA-ASP-based-Cloud-Resource-Allocation" target="_blank" rel="noopener noreferrer" class="more-proj-link">
+          <a href="https://github.com/Ravevx/Agentic-GitHub-Code-Reviewer" target="_blank" rel="noopener noreferrer" class="more-proj-link">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
             GitHub
           </a>
@@ -1565,7 +1614,71 @@ I'm always motivated by the opportunity to develop AI systems that gives a value
 
       </div><!-- /mpRight -->
     </div><!-- /more-proj-timeline -->
+
+    <!-- Show more projects button -->
+    <div class="more-proj-toggle-wrap">
+      <button type="button" class="more-proj-toggle-btn" id="showMoreProjBtn" onclick="document.getElementById('moreProjModalOverlay').classList.add('active')">
+        Some more projects
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+
   </div><!-- /more-projects-section -->
+
+  <!-- FLOATING MODAL: REMAINING PROJECTS -->
+  <div class="more-proj-modal-overlay" id="moreProjModalOverlay">
+    <div class="more-proj-modal">
+      <div class="more-proj-modal-header">
+        <h4 class="more-proj-modal-title">More Projects</h4>
+        <button type="button" class="more-proj-modal-close" id="closeMoreProjModal" onclick="document.getElementById('moreProjModalOverlay').classList.remove('active')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="more-proj-modal-body">
+
+        <div class="modal-proj-row">
+          <span class="modal-proj-name">LLM Spatial Reasoning Evaluation</span>
+          <a href="https://github.com/Ravevx/LLM-Spatial-Reasoning-Evaluation-2D-Physics-Puzzle" target="_blank" rel="noopener noreferrer" class="modal-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="modal-proj-row">
+          <span class="modal-proj-name">Bio-Medical Claim Detection &amp; Span Extraction</span>
+          <a href="https://github.com/Ravevx/Bio-Medical-Claim-Mining" target="_blank" rel="noopener noreferrer" class="modal-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="modal-proj-row">
+          <span class="modal-proj-name">Offensive Language Detection</span>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="modal-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="modal-proj-row">
+          <span class="modal-proj-name">Argument-Aware RAG Research</span>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="modal-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="modal-proj-row">
+          <span class="modal-proj-name">NoCode-DataAnalysis-Studio</span>
+          <a href="https://github.com/Ravevx/NoCode-DataAnalysis-Studio" target="_blank" rel="noopener noreferrer" class="modal-proj-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+      </div><!-- /modal-body -->
+    </div><!-- /more-proj-modal -->
+  </div><!-- /more-proj-modal-overlay -->
 
 </section>
 
